@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#05070d">
+  <title>Flow</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient--one"></div>
+  <div class="ambient ambient--two"></div>
+
+  <div class="device-shell">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span class="status-icons">|||| ))) [ ]</span>
+    </div>
+
+    <header class="topbar">
+      <div class="avatar-chip">
+        <div class="avatar-chip__image">F</div>
+        <div>
+          <p class="eyebrow">Pocket money mode</p>
+          <h1>Flow</h1>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-pill" id="settingsButton" type="button">Budget</button>
+        <button class="icon-circle" id="openCategoriesButton" type="button">+</button>
+      </div>
+    </header>
+
+    <main class="screen">
+      <section class="app-page" id="homePage">
+        <section class="hero-balance">
+          <div class="hero-balance__glow"></div>
+          <div class="hero-balance__header">
+            <div>
+              <p class="eyebrow">Left to spend today</p>
+              <h2 id="moneyLeftToday">Rs 0</h2>
+            </div>
+            <div class="progress-ring">
+              <div class="progress-ring__inner">
+                <span id="budgetUsagePercent">0%</span>
+                <small>used</small>
+              </div>
+            </div>
+          </div>
+          <p class="hero-balance__message" id="moneyLeftMessage">Set your monthly budget to unlock your daily spend guide.</p>
+          <div class="hero-metrics">
+            <article class="hero-metric">
+              <span>Total balance</span>
+              <strong id="totalBalance">Rs 0</strong>
+            </article>
+            <article class="hero-metric">
+              <span>Income</span>
+              <strong id="totalIncome">Rs 0</strong>
+            </article>
+            <article class="hero-metric">
+              <span>Expense</span>
+              <strong id="totalExpense">Rs 0</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="quick-actions">
+          <button class="action-card action-card--primary" id="openTransactionModal" type="button">
+            <span class="action-card__mini">Quick</span>
+            <strong>Add expense</strong>
+          </button>
+          <button class="action-card" data-open-transaction-type="income" type="button">
+            <span class="action-card__mini">Track</span>
+            <strong>Add income</strong>
+          </button>
+          <button class="action-card" id="editBudgetButton" type="button">
+            <span class="action-card__mini">Control</span>
+            <strong>Set budget</strong>
+          </button>
+        </section>
+
+        <section class="budget-panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Monthly plan</p>
+              <h3>Budget runway</h3>
+            </div>
+            <button class="text-button" id="openAnalyticsButton" type="button">Insights</button>
+          </div>
+          <div class="budget-strip">
+            <div class="budget-stat"><span>Monthly budget</span><strong id="monthlyBudgetValue">Rs 0</strong></div>
+            <div class="budget-stat"><span>Remaining</span><strong id="remainingBudgetValue">Rs 0</strong></div>
+            <div class="budget-stat"><span>Today</span><strong id="todaySpending">Rs 0</strong></div>
+            <div class="budget-stat"><span>This month</span><strong id="monthlySpending">Rs 0</strong></div>
+          </div>
+          <div class="budget-track"><div class="budget-track__fill" id="budgetTrackFill"></div></div>
+          <div class="budget-foot"><span>Budget left</span><strong id="budgetLeft">Rs 0</strong></div>
+        </section>
+      </section>
+
+      <section class="app-page app-page--hidden" id="insightsPage">
+        <section class="analytics-panel" id="analyticsSection">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Insights</p>
+              <h3>Spending pulse</h3>
+            </div>
+          </div>
+          <div class="analytics-grid">
+            <div class="chart-card">
+              <div class="pie-chart" id="pieChart"></div>
+              <div class="chart-legend" id="chartLegend"></div>
+            </div>
+            <div class="overview-card">
+              <div><span>This week</span><strong id="weeklyExpense">Rs 0</strong></div>
+              <div><span>This month</span><strong id="analyticsMonthlyExpense">Rs 0</strong></div>
+              <div><span>Top category</span><strong id="topCategory">-</strong></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="analytics-panel analytics-panel--bars">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Breakdown</p>
+              <h3>Category bars</h3>
+            </div>
+          </div>
+          <div class="bars-list" id="barsList"></div>
+        </section>
+
+        <section class="analytics-panel analytics-panel--trend">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Pattern</p>
+              <h3>Daily trend</h3>
+            </div>
+          </div>
+          <div class="trend-card">
+            <div class="trend-chart" id="trendChart"></div>
+            <div class="trend-footer">
+              <div><span>Avg/day</span><strong id="dailyAverage">Rs 0</strong></div>
+              <div><span>Peak day</span><strong id="peakDay">-</strong></div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="app-page app-page--hidden" id="transactionsPage">
+        <section class="transactions-panel transactions-panel--page">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">History</p>
+              <h3>All transactions</h3>
+            </div>
+          </div>
+          <div class="transactions-groups" id="transactionsGroups"></div>
+        </section>
+      </section>
+
+      <section class="app-page app-page--hidden" id="forecastPage">
+        <section class="analytics-panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Forecast</p>
+              <h3>Monthly runway</h3>
+            </div>
+          </div>
+          <div class="forecast-hero">
+            <span class="forecast-hero__label">At this pace, your money lasts</span>
+            <strong id="forecastDaysLeft">0 days</strong>
+            <p id="forecastMessage">Add a few expenses to unlock your monthly forecast.</p>
+          </div>
+          <div class="forecast-grid">
+            <div class="forecast-card">
+              <span>Avg/day spent</span>
+              <strong id="forecastAvgSpend">Rs 0</strong>
+            </div>
+            <div class="forecast-card">
+              <span>Days remaining</span>
+              <strong id="forecastDaysRemaining">0</strong>
+            </div>
+            <div class="forecast-card">
+              <span>Projected month-end</span>
+              <strong id="forecastMonthEnd">Rs 0</strong>
+            </div>
+          </div>
+          <div class="forecast-meter">
+            <div class="forecast-meter__fill" id="forecastMeterFill"></div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Primary">
+      <button class="bottom-nav__item bottom-nav__item--active" id="bottomHomeButton" type="button">Home</button>
+      <button class="bottom-nav__item" id="bottomInsightsButton" type="button">Insights</button>
+      <button class="bottom-nav__item bottom-nav__item--accent" id="bottomAddButton" type="button">+</button>
+      <button class="bottom-nav__item" id="bottomTransactionsButton" type="button">Records</button>
+      <button class="bottom-nav__item" id="bottomForecastButton" type="button">Forecast</button>
+    </nav>
+  </div>
+
+  <dialog class="modal" id="transactionModal">
+    <form class="modal-card" id="transactionForm" method="dialog">
+      <div class="modal-heading">
+        <div><p class="eyebrow">Quick entry</p><h3>Add transaction</h3></div>
+        <button class="icon-button" data-close-modal="transactionModal" type="button">x</button>
+      </div>
+      <div class="type-toggle" id="typeToggle">
+        <button class="type-toggle__button type-toggle__button--active" data-type="expense" type="button">Expense</button>
+        <button class="type-toggle__button" data-type="income" type="button">Income</button>
+      </div>
+      <div class="amount-sheet">
+        <label class="field field--amount">
+          <span>Amount</span>
+          <input id="amountInput" name="amount" type="text" inputmode="none" placeholder="0" readonly required>
+        </label>
+        <div class="amount-presets">
+          <button class="amount-preset" data-amount-preset="50" type="button">+50</button>
+          <button class="amount-preset" data-amount-preset="100" type="button">+100</button>
+          <button class="amount-preset" data-amount-preset="200" type="button">+200</button>
+          <button class="amount-preset" data-amount-preset="500" type="button">+500</button>
+        </div>
+        <div class="keypad" id="amountKeypad">
+          <button class="keypad__key" data-keypad-value="1" type="button">1</button>
+          <button class="keypad__key" data-keypad-value="2" type="button">2</button>
+          <button class="keypad__key" data-keypad-value="3" type="button">3</button>
+          <button class="keypad__key" data-keypad-value="4" type="button">4</button>
+          <button class="keypad__key" data-keypad-value="5" type="button">5</button>
+          <button class="keypad__key" data-keypad-value="6" type="button">6</button>
+          <button class="keypad__key" data-keypad-value="7" type="button">7</button>
+          <button class="keypad__key" data-keypad-value="8" type="button">8</button>
+          <button class="keypad__key" data-keypad-value="9" type="button">9</button>
+          <button class="keypad__key keypad__key--muted" data-keypad-action="clear" type="button">C</button>
+          <button class="keypad__key" data-keypad-value="0" type="button">0</button>
+          <button class="keypad__key keypad__key--accent" data-keypad-action="backspace" type="button">⌫</button>
+        </div>
+      </div>
+      <label class="field"><span>Category</span><select id="categorySelect" name="categoryId" required></select></label>
+      <label class="field"><span>Note</span><input id="noteInput" name="note" type="text" maxlength="80" placeholder="Optional"></label>
+      <label class="field"><span>Date</span><input id="dateInput" name="date" type="date" required></label>
+      <button class="primary-button" type="submit">Save transaction</button>
+    </form>
+  </dialog>
+
+  <dialog class="modal" id="budgetModal">
+    <form class="modal-card" id="budgetForm" method="dialog">
+      <div class="modal-heading">
+        <div><p class="eyebrow">Setup</p><h3>Monthly budget</h3></div>
+        <button class="icon-button" data-close-modal="budgetModal" type="button">x</button>
+      </div>
+      <label class="field"><span>Budget amount</span><input id="budgetInput" name="budget" type="number" min="0" step="0.01" placeholder="5000" required></label>
+      <button class="primary-button" type="submit">Save budget</button>
+    </form>
+  </dialog>
+
+  <dialog class="modal" id="categoryModal">
+    <form class="modal-card" id="categoryForm" method="dialog">
+      <div class="modal-heading">
+        <div><p class="eyebrow">Custom labels</p><h3>New category</h3></div>
+        <button class="icon-button" data-close-modal="categoryModal" type="button">x</button>
+      </div>
+      <label class="field"><span>Name</span><input id="categoryNameInput" name="name" type="text" maxlength="24" placeholder="Books" required></label>
+      <label class="field"><span>Icon</span><input id="categoryIconInput" name="icon" type="text" maxlength="4" placeholder="📚"></label>
+      <label class="field"><span>Color</span><input id="categoryColorInput" name="color" type="color" value="#c8ff3d"></label>
+      <button class="primary-button" type="submit">Create category</button>
+    </form>
+  </dialog>
+
+  <template id="transactionItemTemplate">
+    <article class="transaction-item">
+      <div class="transaction-item__icon"></div>
+      <div class="transaction-item__content">
+        <div class="transaction-item__top">
+          <strong class="transaction-item__title"></strong>
+          <div class="transaction-item__actions">
+            <strong class="transaction-item__amount"></strong>
+            <button class="transaction-item__delete" type="button" aria-label="Delete transaction">Delete</button>
+          </div>
+        </div>
+        <div class="transaction-item__meta"></div>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
