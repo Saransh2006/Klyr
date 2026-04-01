@@ -1,4 +1,4 @@
-const STORAGE_KEY = "flow-state-v1";
+const STORAGE_KEY = "klyr-state-v1";
 
 const defaultCategories = [
   { id: "food", name: "Food", icon: "🍔", color: "#ff9f6b" },
