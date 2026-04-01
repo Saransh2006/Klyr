@@ -106,19 +106,6 @@ select {
   opacity: 0.6;
 }
 
-.device-shell::before {
-  content: "";
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 132px;
-  height: 28px;
-  border-radius: 999px;
-  background: #030407;
-  z-index: 1;
-}
-
 .topbar,
 .hero-balance__header,
 .hero-balance__label-row,
@@ -1045,21 +1032,55 @@ h3 {
 @media (max-width: 480px) {
   body {
     padding: 0;
+    overflow: hidden;
   }
 
   .device-shell {
     width: 100%;
+    max-width: none;
     height: 100dvh;
     border-radius: 0;
     border: 0;
-    padding-bottom: max(14px, env(safe-area-inset-bottom));
+    box-shadow: none;
+    padding:
+      max(10px, env(safe-area-inset-top))
+      12px
+      max(16px, env(safe-area-inset-bottom));
   }
 
-  .topbar,
+  .topbar {
+    align-items: center;
+    padding: 2px 2px 16px;
+    gap: 10px;
+  }
+
   .hero-balance__header,
   .hero-balance__label-row,
   .section-head {
     align-items: flex-start;
+  }
+
+  .avatar-chip {
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .avatar-chip > div:last-child {
+    min-width: 0;
+  }
+
+  .topbar-actions {
+    gap: 8px;
+    flex: 0 0 auto;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .eyebrow {
+    font-size: 0.64rem;
+    letter-spacing: 0.12em;
   }
 
   .progress-ring {
@@ -1068,10 +1089,21 @@ h3 {
 
   .hero-balance__message {
     max-width: none;
+    font-size: 0.96rem;
   }
 
   .hero-metrics {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .hero-metric {
+    padding: 12px 10px;
+    border-radius: 16px;
+  }
+
+  .hero-metric strong {
+    font-size: 1.05rem;
   }
 
   .chart-card {
@@ -1086,7 +1118,19 @@ h3 {
     grid-column: auto;
   }
 
+  .screen {
+    padding-bottom: 8px;
+  }
+
+  .bottom-nav {
+    margin-top: 8px;
+    padding: 7px;
+    gap: 4px;
+  }
+
   .bottom-nav__item {
     font-size: 0.62rem;
+    min-height: 40px;
+    padding: 0 2px;
   }
 }
